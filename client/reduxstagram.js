@@ -1,21 +1,25 @@
 import React from 'react';
-
 import { render } from 'react-dom';
+import { Route } from 'react-router-dom';
+import { ConnectedRouter } from 'react-router-redux';
+import { Provider } from 'react-redux';
+import store, { history } from './store';
+import App from './components/App';
+//import Single from './components/Single';
+//import PhotoGrid from './components/PhotoGrid';
 
-// Import css
 import css from './styles/style.styl';
 
-// Import Components
-import App from './components/App';
-import Single from './components/Single';
-import PhotoGrid from './components/PhotoGrid';
-
-// import react router deps
-
-import { Router, Route, IndexRoute, browserHistory } from 'react-router'; 
-
-import { Provider } from 'react-redux'; // the binding that allows us to use redux with react
-import store, { history } from './store';
+// const router = (
+//   <Provider store={store}>
+//     <Router history={history}>
+//       <Route path='/' component={App}>
+//         <IndexRoute component={PhotoGrid}></IndexRoute>
+//         <Route path='/view/:postId' component={Single}></Route>
+//       </Route>
+//     </Router>
+//   </Provider>
+// )
 
 import Raven from 'raven-js';
 import { sentry_url } from './data/config';
@@ -23,18 +27,12 @@ import { sentry_url } from './data/config';
 Raven.config(sentry_url).install();
 
 
-// console.log(window.doesNotExist.nope);  // test sentry 
-
-
 const router = (
-	<Provider store={store}>
-		<Router history={browserHistory}>
-			<Route path="/" component={App}>
-				<IndexRoute component={PhotoGrid}></IndexRoute>
-				<Route path="view/:postId" component={Single}></Route>
-			</Route>	
-		</Router>
-	</Provider>
+  <Provider store={store}>
+    <ConnectedRouter history={history}>
+      <Route path='/' component={App} />
+    </ConnectedRouter>
+  </Provider>
 )
 
 render(router, document.getElementById('root'));

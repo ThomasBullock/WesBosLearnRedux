@@ -1,27 +1,37 @@
-import React from 'react';
+import React, { Component } from 'react';
 
-const Comments = React.createClass({
+class Comments extends Component {
+  constructor(props) {
+    super(props)
+
+    this.renderComment = this.renderComment.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
   renderComment(comment, i) {
+
     return (
       <div className="comment" key={i}>
         <p>
           <strong>{comment.user}</strong>
           {comment.text}
-          <button className="remove-comment" onClick={this.props.removeComment.bind(null, this.props.params.postId, i)}>&times;</button>
+       <button className="remove-comment" onClick={this.props.removeComment.bind(null, this.props.params.postId, i)}>&times;</button>
+
         </p>
       </div>
     )
-  },
+  }
   handleSubmit(e) {
   	e.preventDefault();
   	console.log(this.props);
-  	const { postId } = this.props.params;
+  	// const { postId } = this.props.params;
+    const { postId } = this.props.computedMatch.params;    
   	const author = this.refs.author.value;
   	const comment = this.refs.comment.value;
   	console.log(postId, author, comment);
   	this.props.addComment(postId, author, comment);
     this.refs.commentForm.reset();  	
-  },
+  }
 
   render() {
   	console.log(typeof this.props.postComments)
@@ -37,6 +47,6 @@ const Comments = React.createClass({
       </div>
     )
   }
-});
+}
 
 export default Comments;
