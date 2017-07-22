@@ -23,7 +23,7 @@ export const history = createHistory();
 const middleware = routerMiddleware(history);
 
 const store = createStore(
-  rootReducer,
+  rootReducer,  // combined reducer created in ./reducers/index
   defaultState,
   enhancers,
   applyMiddleware(middleware)
